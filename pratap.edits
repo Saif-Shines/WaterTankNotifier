@@ -1,0 +1,82 @@
+
+ *************************************************************/
+
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
+#include <ESP8266_Lib.h>
+#include <BlynkSimpleShieldEsp8266.h>
+
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
+char auth[] = (auth token from blynk app);
+
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "wifi name";
+char pass[] = "wifi password";
+
+// Hardware Serial on Mega, Leonardo, Micro...
+//#define EspSerial Serial1
+
+// or Software Serial on Uno, Nano...
+#include <SoftwareSerial.h>
+SoftwareSerial EspSerial(aurdino pins); // RX, TX
+
+// Your ESP8266 baud rate:
+#define ESP8266_BAUD 9600
+#define trig 3
+#define echo 2
+ESP8266 wifi(&EspSerial);
+int f;
+BLYNK_READ(V1)
+{
+Blynk.virtualWrite(V1,f);
+}
+
+void setup()
+{
+  
+  Debug console
+  Serial.begin(9600);
+pinMode(trig,OUTPUT);
+pinMode(echo,INPUT);
+
+  
+ // Set ESP8266 baud rate
+  EspSerial.begin(ESP8266_BAUD);
+  delay(10);
+
+  Blynk.begin(auth, wifi, ssid, pass);
+}
+
+void loop()
+{
+  Blynk.run();
+  
+  
+  digitalWrite(trig,LOW);
+  digitalWrite(trig,HIGH);
+  digitalWrite(trig,LOW);
+  long duration=pulseIn(echo,HIGH);
+  float distance=(0.017*duration);
+  
+  
+delay(1000);
+float vol= 314;
+float wvol=((314*(1000-distance))/100);
+f= map(wvol,0,304,0,100);
+//Serial.print("%");
+//Serial.println(f);
+  
+  Blynk.virtualWrite(V1,f);
+  if(f>=1000)
+  {
+  Blynk.notify("water level in tank exceeded");
+  }
+  else if(f<=100)
+  {
+  Blynk.notify(" tank is empty");
+  }
+}
