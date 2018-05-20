@@ -14,6 +14,7 @@ char auth[] = (auth token from blynk app);
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
+// if awe use aurdino with inbult wifi we can directly access
 char ssid[] = "wifi name";
 char pass[] = "wifi password";
 
@@ -26,8 +27,8 @@ SoftwareSerial EspSerial(10,11); // RX, TX
 
 // Your ESP8266 baud rate:
 #define ESP8266_BAUD 9600
-#define trig 3
-#define echo 2
+#define trig 4
+#define echo 3
 ESP8266 wifi(&EspSerial);
 int f;
 BLYNK_READ(V1)
@@ -66,13 +67,13 @@ void loop()
   
 delay(100)
 float vol= 314;
-float wvol=((314*(1000-distance))/100);
+float wvol=((314*(100-distance))/100);
 f= map(wvol,0,304,0,100);
 //Serial.print("%");
 //Serial.println(f);
   
   Blynk.virtualWrite(V1,f);
-  if(f>=1000)
+  if(f>=100)
   {
   Blynk.notify("water level in tank exceeded");
   }
@@ -80,4 +81,8 @@ f= map(wvol,0,304,0,100);
   {
   Blynk.notify(" tank is empty");
   }
-}
+  }
+  
+  
+  
+  // we can use aurdino-uno-wifi which is inbuilt wifi so that we can directly access
