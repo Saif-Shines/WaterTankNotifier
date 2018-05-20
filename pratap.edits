@@ -22,7 +22,7 @@ char pass[] = "wifi password";
 
 // or Software Serial on Uno, Nano...
 #include <SoftwareSerial.h>
-SoftwareSerial EspSerial(aurdino pins); // RX, TX
+SoftwareSerial EspSerial(10,11); // RX, TX
 
 // Your ESP8266 baud rate:
 #define ESP8266_BAUD 9600
@@ -43,6 +43,8 @@ void setup()
 pinMode(trig,OUTPUT);
 pinMode(echo,INPUT);
 
+we can give delay here to make process comfortable
+
   
  // Set ESP8266 baud rate
   EspSerial.begin(ESP8266_BAUD);
@@ -62,8 +64,7 @@ void loop()
   long duration=pulseIn(echo,HIGH);
   float distance=(0.017*duration);
   
-  
-delay(1000);
+delay(100)
 float vol= 314;
 float wvol=((314*(1000-distance))/100);
 f= map(wvol,0,304,0,100);
@@ -75,7 +76,7 @@ f= map(wvol,0,304,0,100);
   {
   Blynk.notify("water level in tank exceeded");
   }
-  else if(f<=100)
+  else if(f<=10)
   {
   Blynk.notify(" tank is empty");
   }
