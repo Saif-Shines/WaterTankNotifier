@@ -43,5 +43,8 @@ In this case we measure the distance of the water level from the top of the tank
 
 The ESP8266 is a really useful, cheap WiFi module for controlling devices over the Internet. It can work with a micro-controller like the Arduino or it can be programmed to work on its own. We will be using it to upload the water level data to a IoT database
 
-## CIRCUIT
+## CIRCUIT:
 ![iot-arduino-garbage-monitor-circuit](https://user-images.githubusercontent.com/31897267/40417331-2018eb50-5e9d-11e8-91a0-623c8c1cf98d.png)
+
+## CONNECTION:
+The circuit will be connected as shown in the circuit diagram and the tank would be monitored using the BLYNK app(https://www.blynk.cc/).
