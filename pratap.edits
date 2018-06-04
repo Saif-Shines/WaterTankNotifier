@@ -27,8 +27,8 @@ SoftwareSerial EspSerial(10,11); // RX, TX
 
 // Your ESP8266 baud rate:
 #define ESP8266_BAUD 9600
-#define trig 4
-#define echo 3
+#define trig 3
+#define echo 2
 ESP8266 wifi(&EspSerial);
 int f;
 BLYNK_READ(V1)
@@ -44,6 +44,7 @@ void setup()
 pinMode(trig,OUTPUT);
 pinMode(echo,INPUT);
 
+delay(10);
 we can give delay here to make process comfortable
 
   
@@ -61,11 +62,13 @@ void loop()
   
   digitalWrite(trig,LOW);
   digitalWrite(trig,HIGH);
+  delayMicroseconds(2);
   digitalWrite(trig,LOW);
+  delayMicroseconds(8);
   long duration=pulseIn(echo,HIGH);
   float distance=(0.017*duration);
   
-delay(100)
+delay(1000);
 float vol= 314;
 float wvol=((314*(100-distance))/100);
 f= map(wvol,0,304,0,100);
@@ -77,7 +80,7 @@ f= map(wvol,0,304,0,100);
   {
   Blynk.notify("water level in tank exceeded");
   }
-  else if(f<=10)
+  else if(f<=5)
   {
   Blynk.notify(" tank is empty");
   }
